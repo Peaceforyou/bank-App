@@ -1,0 +1,9 @@
+CREATE TABLE card (
+id BIGSERIAL PRIMARY KEY,
+account_id BIGINT,
+card_id VARCHAR(16) NOT NULL UNIQUE,
+payment_system VARCHAR(30) NOT NULL,
+status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'CLOSED', 'BLOCKED', 'ARRESTED')),
+CONSTRAINT fk_card_account FOREIGN KEY (account_id) REFERENCES account(id)
+);
+

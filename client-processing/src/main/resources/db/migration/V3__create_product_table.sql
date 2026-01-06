@@ -1,0 +1,10 @@
+CREATE TABLE product (
+id BIGSERIAL PRIMARY KEY ,
+name VARCHAR(20) NOT NULL,
+key VARCHAR(20) CHECK (key IN ('DC', 'CC', 'AC', 'IPO', 'PC', 'PENS', 'NS', 'INS', 'BS')),
+create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+product_id VARCHAR(20) GENERATED ALWAYS AS (key || '_' || id) STORED
+);
+
+
+
