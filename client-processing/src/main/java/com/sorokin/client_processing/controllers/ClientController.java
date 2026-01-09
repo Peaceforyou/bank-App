@@ -23,10 +23,6 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @GetMapping("/hello")
-    public String sayHello() {
-        return "HELLO!";
-    }
 
 
     @PostMapping("/register")
