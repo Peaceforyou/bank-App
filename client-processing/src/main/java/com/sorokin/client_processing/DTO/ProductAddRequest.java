@@ -10,8 +10,6 @@ import lombok.Data;
 public class ProductAddRequest {
 
     private String name;
-
-
     private ProductKey key;
 
 
