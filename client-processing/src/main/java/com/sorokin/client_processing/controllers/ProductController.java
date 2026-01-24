@@ -1,9 +1,13 @@
 package com.sorokin.client_processing.controllers;
 
+import com.sorokin.client_processing.DTO.ClientProductOpenRequest;
 import com.sorokin.client_processing.DTO.ProductAddRequest;
+import com.sorokin.client_processing.exceptions.ClientProductException;
 import com.sorokin.client_processing.exceptions.ProductAlreadyExistException;
 import com.sorokin.client_processing.exceptions.ProductNotFoundException;
+import com.sorokin.client_processing.models.ClientProduct;
 import com.sorokin.client_processing.models.Product;
+import com.sorokin.client_processing.services.ClientProductService;
 import com.sorokin.client_processing.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +21,12 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
     private final ProductService productService;
+    private final ClientProductService clientProductService;
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, ClientProductService clientProductService) {
         this.productService = productService;
+        this.clientProductService = clientProductService;
     }
 
 
@@ -81,4 +87,20 @@ public class ProductController {
         }
     }
 
+    @PostMapping("/open")
+    public ResponseEntity<String> openProduct(@RequestBody ClientProductOpenRequest request)
+    {
+
+        try {
+            clientProductService.openProduct(request.getProductId(), request.getClientId());
+        }
+        catch (ClientProductException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("ClientProductException");
+        } catch (ProductNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("ProductNotFoundException");
+        }
+        return ResponseEntity.ok().build();
+
+    }
 }
+
