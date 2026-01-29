@@ -1,12 +1,14 @@
 package com.sorokin.client_processing.services;
 
 
+import com.sorokin.client_processing.DTO.ClientRegistrationRequest;
 import com.sorokin.client_processing.exceptions.UserAlreadyExistException;
 import com.sorokin.client_processing.models.Client;
 import com.sorokin.client_processing.models.User;
 import com.sorokin.client_processing.repositories.ClientRepository;
 import com.sorokin.client_processing.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,17 +16,38 @@ import org.springframework.transaction.annotation.Transactional;
 public class ClientService {
     private final ClientRepository clientRepository;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ClientService(ClientRepository clientRepository, UserRepository userRepository) {
+    public ClientService(ClientRepository clientRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.clientRepository = clientRepository;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional(readOnly = false)
-    public void registerClient(Client client, User user) throws Exception {
+    public void registerClient(ClientRegistrationRequest request) throws Exception {
+
+        User user = User.builder().login(request.getLogin()).
+                password(passwordEncoder.encode(request.getPassword())).
+                email(request.getEmail())
+                .build();
+
+
+        Client client = Client.builder().firstName(request.getFirstName())
+                .middleName(request.getMiddleName())
+                .lastName(request.getLastName())
+                .dateOfBirth(request.getDateOfBirth())
+                .documentType(request.getDocumentType())
+                .documentId(request.getDocumentId())
+                .documentPrefix(request.getDocumentPrefix())
+                .documentSuffix(request.getDocumentSuffix())
+                .build();
+
         if (clientRepository.existsByDocumentId(client.getDocumentId())) {
             throw new UserAlreadyExistException("User already exist!");};
+
+
 
         //Add new user
         userRepository.save(user);
