@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class CardCreationProducer {
 
-    KafkaTemplate<String, CardCreationEvent> kafkaTemplate;
+    KafkaTemplate<String, Object> kafkaTemplate;
 
     @Autowired
-    public CardCreationProducer(KafkaTemplate<String, CardCreationEvent> kafkaTemplate) {
+    public CardCreationProducer(KafkaTemplate<String, Object> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
