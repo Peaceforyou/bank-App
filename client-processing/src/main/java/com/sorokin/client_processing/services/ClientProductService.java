@@ -58,7 +58,7 @@ public class ClientProductService {
                 productKey(product.getKey())
                 .openDate(LocalDate.now()).
                 build();
-        clientProductProducer.send(product.getKey().getTopic(),clientProductEvent);
+        clientProductProducer.send(clientProductEvent);
 
 
 
