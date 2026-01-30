@@ -1,11 +1,16 @@
 package com.sorokin.client_processing.kafka.producers;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sorokin.client_processing.DTO.ClientProductEvent;
-import com.sorokin.client_processing.models.Product;
+import com.sorokin.client_processing.enums.ProductKey;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 @Component
 public class ClientProductProducer {
@@ -17,9 +22,9 @@ public class ClientProductProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void send(String topic, ClientProductEvent clientProductEvent) {
-        kafkaTemplate.send(topic,clientProductEvent);
-        System.out.println("KAFKA sent to topic '" + topic + "': " + clientProductEvent);
+    public void send(ClientProductEvent clientProductEvent) {
+        kafkaTemplate.send(clientProductEvent.getProductKey().getTopic(),clientProductEvent);
+        System.out.println("KAFKA sent to topic '" + clientProductEvent.getProductKey().getTopic() + "': " + clientProductEvent);
     }
 
 
