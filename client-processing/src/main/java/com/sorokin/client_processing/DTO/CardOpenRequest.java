@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CardOpenRequest {
 
-    private Long accountId;
+    private String clientId;
 
     private String paymentSystem;
 
