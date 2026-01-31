@@ -25,7 +25,7 @@ public class CardController {
     @PostMapping()
      public ResponseEntity<String> createCard(@RequestBody CardOpenRequest request) {
 
-        cardService.createCard(request.getAccountId(),request.getPaymentSystem());
+        cardService.createCard(request.getClientId(),request.getPaymentSystem());
 
 
         return ResponseEntity.ok("Card creation is processing");

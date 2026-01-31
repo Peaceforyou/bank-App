@@ -18,10 +18,10 @@ public class CardService {
         this.cardCreationProducer = cardCreationProducer;
     }
 
-    public void createCard(Long accountId, String paymentSystem) {
+    public void createCard(String clientId, String paymentSystem) {
 
         CardCreationEvent event = new CardCreationEvent(
-                accountId,
+                clientId,
                 paymentSystem,
                 LocalDate.now().toString()
         );

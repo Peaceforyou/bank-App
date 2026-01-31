@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CardCreationEvent {
-    private Long accountId;
+    private String clientId;
     private String paymentSystem;
     private String requestDate;
 }
