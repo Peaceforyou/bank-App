@@ -40,4 +40,17 @@ public class AccountService {
 
 
     }
+
+    @Transactional(readOnly = true)
+    public boolean checkIfInBlackList(String clientId) {
+        Account account = accountRepository.findByClientId(clientId)
+                .orElseThrow(() -> new RuntimeException("Account not found for client: " + clientId));
+        return account.getStatus() == Status.BLOCKED;
+    }
+
+    @Transactional(readOnly = true)
+    public Account findByClientId(String clientId) {
+        return accountRepository.findByClientId(clientId)
+                .orElseThrow(() -> new RuntimeException("Account not found for client: " + clientId));
+    }
 }
