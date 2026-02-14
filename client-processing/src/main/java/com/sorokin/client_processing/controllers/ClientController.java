@@ -2,8 +2,8 @@ package com.sorokin.client_processing.controllers;
 
 
 import com.sorokin.client_processing.DTO.ClientRegistrationRequest;
-import com.sorokin.client_processing.exceptions.UserAlreadyExistException;
-import com.sorokin.client_processing.services.ClientService;
+import com.sorokin.client_processing.exceptions.DocumentAlreadyExistException;
+import com.sorokin.client_processing.services.RegistrationService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ClientController {
 
-    private ClientService clientService;
+    private final RegistrationService registrationService;
 
-    public ClientController(ClientService clientService) {
-        this.clientService = clientService;
+    public ClientController(RegistrationService registrationService) {
+        this.registrationService = registrationService;
     }
 
 
 
     @PostMapping("/register")
-    public String registerClient(@RequestBody ClientRegistrationRequest request) {
+    public String createClientForUser(@RequestBody ClientRegistrationRequest request) {
         try {
-            clientService.registerClient(request);
+            registrationService.registerClient(request);
             return "USER HAVE BEEN REGISTERED";
         }
-        catch (UserAlreadyExistException e1) {
+        catch (DocumentAlreadyExistException e1) {
             return "USER ALREADY EXIST";
         }
         catch (Exception e) {
