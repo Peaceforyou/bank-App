@@ -2,6 +2,7 @@ package com.sorokin.client_processing.services;
 
 
 import com.sorokin.client_processing.DTO.ClientRegistrationRequest;
+import com.sorokin.client_processing.exceptions.RegisterClientException;
 import com.sorokin.client_processing.exceptions.UserAlreadyExistException;
 import com.sorokin.client_processing.models.Client;
 import com.sorokin.client_processing.models.User;
@@ -26,7 +27,7 @@ public class ClientService {
     }
 
     @Transactional(readOnly = false)
-    public void registerClient(ClientRegistrationRequest request) throws Exception {
+    public void registerClient(ClientRegistrationRequest request) throws RegisterClientException {
 
         User user = User.builder().login(request.getLogin()).
                 password(passwordEncoder.encode(request.getPassword())).
