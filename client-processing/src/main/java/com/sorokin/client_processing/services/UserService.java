@@ -35,7 +35,8 @@ public class UserService {
 
         if (userRepository.existsByLogin(login)) {
             throw new DocumentAlreadyExistException("User already exist!");}
-            userRepository.save(userToSave);
+
+        userRepository.save(userToSave);
 
         return userToSave;
 
