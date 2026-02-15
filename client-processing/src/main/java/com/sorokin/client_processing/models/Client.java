@@ -2,9 +2,7 @@ package com.sorokin.client_processing.models;
 
 import com.sorokin.client_processing.enums.DocumentType;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Date;
 
@@ -12,6 +10,8 @@ import java.sql.Date;
 @Table(name = "client")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Client {
 
